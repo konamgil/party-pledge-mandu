@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/auth/
+
+Sitemap: https://party-pledge.example.com/sitemap.xml

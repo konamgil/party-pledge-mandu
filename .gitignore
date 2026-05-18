@@ -1,0 +1,31 @@
+node_modules/
+dist/
+build/
+
+# Mandu generated/runtime artifacts
+.mandu/
+mandu-report.json
+
+# Local data
+local.db
+local.db-journal
+*.tsbuildinfo
+
+# Test artifacts (ATE Playwright run output)
+test-results/
+playwright-report/
+
+# Agent / IDE config
+.claude.json
+.idea/
+.vscode/
+.DS_Store
+
+# Logs
+*.log
+dev.log
+
+# Env
+.env
+.env.local
+.env.*.local

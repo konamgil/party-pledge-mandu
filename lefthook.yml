@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: "{app,src,spec,tests}/**/*.{ts,tsx,js,jsx}"
+      run: bunx oxlint --fix {staged_files} && git add {staged_files}
+
+pre-push:
+  parallel: true
+  commands:
+    guard:
+      run: bun run guard
+    typecheck:
+      run: bun run check
+    lint:
+      run: bun run lint
+    smoke:
+      run: |
+        if curl -sf http://localhost:3333/api/health > /dev/null 2>&1; then
+          TEST_BASE_URL=http://localhost:3333 bun test tests/api/smoke.test.ts
+        else
+          echo "[lefthook] dev server not running on 3333 — skipping smoke (run 'PORT=3333 bun run dev')"
+        fi

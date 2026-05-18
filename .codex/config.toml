@@ -1,0 +1,3 @@
+[mcp_servers.mandu]
+args = ["mandu-mcp"]
+command = "bunx"
