@@ -1,4 +1,4 @@
-import { listCandidates, listParties } from "@/server/infra/queries";
+import { listCandidates, listParties } from "@/shared/contracts/api";
 import { PledgeForm } from "@/client/widgets/pledge-form/PledgeForm";
 
 export const metadata = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthButton } from "@/client/widgets/auth-button/AuthButton";
+import { AuthButton } from "@/client/features/auth-button/AuthButton";
 import { regions } from "@/client/shared/lib/data";
 
 interface HeaderProps {

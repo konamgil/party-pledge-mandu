@@ -1,4 +1,4 @@
-import HomeApp from "@/client/widgets/home-app/HomeApp";
+import HomeApp from "@/client/pages/home/HomeApp";
 import { listCandidates, listParties, listPledges } from "@/shared/contracts/api";
 
 const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";

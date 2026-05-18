@@ -1,4 +1,4 @@
-import { listCandidates, listParties, listPledges } from "@/server/infra/queries";
+import { listCandidates, listParties, listPledges } from "@/shared/contracts/api";
 import { SearchInput } from "@/client/widgets/search-input/SearchInput";
 
 export async function generateMetadata({
