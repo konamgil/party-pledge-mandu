@@ -1,18 +1,11 @@
-import {
-  getPartyByCode,
-  listCandidatesByParty,
-  listPledgesByParty,
-} from "@/server/infra/queries";
+import { getPartyBundle } from "@/shared/contracts/api";
 
 const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";
 
 export async function generateMetadata({ params }: { params: { code: string } }) {
-  const party = await getPartyByCode(params.code);
-  if (!party) return { title: "정당을 찾을 수 없습니다 | 공약포럼" };
-  const [candidates, pledges] = await Promise.all([
-    listCandidatesByParty(party.id),
-    listPledgesByParty(party.id),
-  ]);
+  const bundle = await getPartyBundle(params.code);
+  if (!bundle) return { title: "정당을 찾을 수 없습니다 | 공약포럼" };
+  const { party, candidates, pledges } = bundle;
   return {
     title: `${party.name} 2026 지방선거 공약 ${pledges.length}건 | 공약포럼`,
     description: `${party.name}(${party.shortName}) 소속 ${candidates.length}명 후보의 공약 ${pledges.length}건을 한눈에.`,
@@ -20,8 +13,8 @@ export async function generateMetadata({ params }: { params: { code: string } })
 }
 
 export default async function PartyPage({ params }: { params: { code: string } }) {
-  const party = await getPartyByCode(params.code);
-  if (!party) {
+  const bundle = await getPartyBundle(params.code);
+  if (!bundle) {
     return (
       <main className="max-w-4xl mx-auto p-12 text-center">
         <h1 className="text-2xl font-bold text-gray-800">정당을 찾을 수 없습니다</h1>
@@ -29,10 +22,7 @@ export default async function PartyPage({ params }: { params: { code: string } }
       </main>
     );
   }
-  const [candidates, pledges] = await Promise.all([
-    listCandidatesByParty(party.id),
-    listPledgesByParty(party.id),
-  ]);
+  const { party, candidates, pledges } = bundle;
 
   const description = `${party.name}(${party.shortName}) 소속 ${candidates.length}명 후보의 공약 ${pledges.length}건을 한눈에.`;
   const jsonLd = {

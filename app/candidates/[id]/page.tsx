@@ -1,11 +1,11 @@
-import { getCandidateById, listPledgesByCandidate } from "@/server/infra/queries";
+import { getCandidateBundle } from "@/shared/contracts/api";
 
 const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const candidate = await getCandidateById(params.id);
-  if (!candidate) return { title: "후보자를 찾을 수 없습니다 | 공약포럼" };
-  const pledges = await listPledgesByCandidate(params.id);
+  const bundle = await getCandidateBundle(params.id);
+  if (!bundle) return { title: "후보자를 찾을 수 없습니다 | 공약포럼" };
+  const { candidate, pledges } = bundle;
   return {
     title: `${candidate.name} ${candidate.position} 후보 공약 ${pledges.length}건 | 공약포럼`,
     description: `${candidate.region} ${candidate.subRegion} ${candidate.position} ${candidate.name} 후보의 공약 ${pledges.length}건과 시민 점수 ${candidate.citizenScore}.`,
@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function CandidatePage({ params }: { params: { id: string } }) {
-  const candidate = await getCandidateById(params.id);
-  if (!candidate) {
+  const bundle = await getCandidateBundle(params.id);
+  if (!bundle) {
     return (
       <main className="max-w-3xl mx-auto p-12 text-center">
         <h1 className="text-2xl font-bold text-gray-800">후보자를 찾을 수 없습니다</h1>
@@ -22,7 +22,7 @@ export default async function CandidatePage({ params }: { params: { id: string }
       </main>
     );
   }
-  const pledges = await listPledgesByCandidate(params.id);
+  const { candidate, pledges } = bundle;
 
   const description = `${candidate.region} ${candidate.subRegion} ${candidate.position} ${candidate.name} 후보의 공약 ${pledges.length}건과 시민 점수 ${candidate.citizenScore}.`;
   const jsonLd = {

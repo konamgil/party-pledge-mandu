@@ -14,10 +14,5 @@ pre-push:
       run: bun run check
     lint:
       run: bun run lint
-    smoke:
-      run: |
-        if curl -sf http://localhost:3333/api/health > /dev/null 2>&1; then
-          TEST_BASE_URL=http://localhost:3333 bun test tests/api/smoke.test.ts
-        else
-          echo "[lefthook] dev server not running on 3333 — skipping smoke (run 'PORT=3333 bun run dev')"
-        fi
+# smoke 는 CI workflow 가 dev 자동 spawn 으로 처리.
+# 로컬 사전 verify: PORT=3333 bun run dev 띄운 채로 bun test tests/api/smoke.test.ts

@@ -7,6 +7,7 @@ interface CommentRow {
   userId: string;
   body: string;
   createdAt: string;
+  userName: string;
 }
 
 export default Mandu.filling()
@@ -21,8 +22,8 @@ export default Mandu.filling()
         : null;
 
     const rows = pledgeIdFilter
-      ? await db<CommentRow>`SELECT "id", "pledge_id" AS "pledgeId", "user_id" AS "userId", "body", "created_at" AS "createdAt" FROM "comments" WHERE "pledge_id" = ${pledgeIdFilter} ORDER BY "created_at" DESC LIMIT ${limit} OFFSET ${offset}`
-      : await db<CommentRow>`SELECT "id", "pledge_id" AS "pledgeId", "user_id" AS "userId", "body", "created_at" AS "createdAt" FROM "comments" ORDER BY "created_at" DESC LIMIT ${limit} OFFSET ${offset}`;
+      ? await db<CommentRow>`SELECT c."id", c."pledge_id" AS "pledgeId", c."user_id" AS "userId", c."body", c."created_at" AS "createdAt", COALESCE(u."name", '익명') AS "userName" FROM "comments" c LEFT JOIN "users" u ON u."id" = c."user_id" WHERE c."pledge_id" = ${pledgeIdFilter} ORDER BY c."created_at" DESC LIMIT ${limit} OFFSET ${offset}`
+      : await db<CommentRow>`SELECT c."id", c."pledge_id" AS "pledgeId", c."user_id" AS "userId", c."body", c."created_at" AS "createdAt", COALESCE(u."name", '익명') AS "userName" FROM "comments" c LEFT JOIN "users" u ON u."id" = c."user_id" ORDER BY c."created_at" DESC LIMIT ${limit} OFFSET ${offset}`;
 
     const totalRow = pledgeIdFilter
       ? await db.one<{ total: number }>`SELECT COUNT(*) AS "total" FROM "comments" WHERE "pledge_id" = ${pledgeIdFilter}`

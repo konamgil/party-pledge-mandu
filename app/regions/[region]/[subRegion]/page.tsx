@@ -1,5 +1,5 @@
 import { getRegionFullName } from "@/client/shared/lib/data";
-import { listCandidates, listPledges } from "@/server/infra/queries";
+import { listCandidates, listPledges } from "@/shared/contracts/api";
 
 export async function generateMetadata({
   params,

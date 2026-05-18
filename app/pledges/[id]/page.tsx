@@ -1,5 +1,5 @@
 import { CommentForm } from "@/client/widgets/comment-form/CommentForm";
-import { getPledgeById, listCommentsByPledgeId } from "@/server/infra/queries";
+import { getPledgeById, listCommentsByPledgeId } from "@/shared/contracts/api";
 
 function timeAgoServer(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
