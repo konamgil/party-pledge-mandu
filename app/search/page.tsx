@@ -14,10 +14,6 @@ export async function generateMetadata({
   };
 }
 
-function highlight(text: string, q: string): string {
-  return text;
-}
-
 export default async function SearchPage({
   searchParams,
 }: {

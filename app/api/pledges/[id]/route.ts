@@ -11,8 +11,6 @@ function tryParseJson(value: unknown): unknown {
   }
 }
 
-const SELECT_PLEDGE_COLS = `"id", "party_id" AS "partyId", "candidate_id" AS "candidateId", "candidate_name" AS "candidateName", "candidate_position" AS "candidatePosition", "title", "summary", "category", "region", "sub_region" AS "subRegion", "position_tab" AS "positionTab", "upvotes", "downvotes", "comment_count" AS "commentCount", "author", "tags", "created_at" AS "createdAt"`;
-
 export default Mandu.filling().get(async (ctx) => {
   const id = typeof ctx.params?.id === "string" ? ctx.params.id : null;
   if (!id) {

@@ -50,7 +50,6 @@ export default async function PledgePage({ params }: { params: { id: string } })
     mainEntityOfPage: `${SITE_URL}/pledges/${pledge.id}`,
   };
 
-  const title = `${pledge.title} — ${pledge.candidateName} | 공약포럼`;
   const description = pledge.summary.slice(0, 158);
 
   return (

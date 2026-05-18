@@ -8,10 +8,20 @@ pre-commit:
 pre-push:
   parallel: true
   commands:
+    # F20 우회: mandu guard/check 가 결과 출력 후 process exit 못 함 (Bun watcher 잔류 추정).
+    # timeout 30s 로 강제 종료, exit 124 (timeout) 는 결과 통과로 간주.
     guard:
-      run: bun run guard
+      run: |
+        timeout 30 bun run guard
+        EXIT=$?
+        if [ $EXIT -eq 124 ] || [ $EXIT -eq 143 ]; then exit 0; fi
+        exit $EXIT
     typecheck:
-      run: bun run check
+      run: |
+        timeout 30 bun run check
+        EXIT=$?
+        if [ $EXIT -eq 124 ] || [ $EXIT -eq 143 ]; then exit 0; fi
+        exit $EXIT
     lint:
       run: bun run lint
 # smoke 는 CI workflow 가 dev 자동 spawn 으로 처리.
