@@ -6,8 +6,9 @@
  * - production 에서는 `MANDU_INTERNAL_URL` 환경 변수로 self-origin 지정.
  */
 import type { Candidate, Party, Pledge } from "@/client/shared/lib/types";
+import { env } from "@/shared/contracts/env";
 
-const INTERNAL_BASE = process.env.MANDU_INTERNAL_URL ?? "http://localhost:3333";
+const INTERNAL_BASE = env("MANDU_INTERNAL_URL", "http://localhost:3333");
 
 async function apiGet<T>(path: string): Promise<T | null> {
   try {

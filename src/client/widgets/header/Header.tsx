@@ -1,7 +1,10 @@
 "use client";
 
 import { AuthButton } from "@/client/features/auth-button/AuthButton";
+import { Dropdown } from "@/client/shared/ui/dropdown";
 import { regions } from "@/client/shared/lib/data";
+
+const REGION_OPTIONS = regions.filter((r) => r !== "전체").map((r) => ({ value: r, label: r }));
 
 interface HeaderProps {
   searchQuery: string;
@@ -70,31 +73,25 @@ export function Header({
             {selectedRegion}
           </button>
           <div className="hidden lg:flex items-center gap-1.5">
-            <select
+            <Dropdown
+              options={REGION_OPTIONS}
               value={selectedRegion}
-              onChange={(e) => onRegionChange(e.target.value)}
-              className="bg-gray-100 rounded-full px-3 py-1.5 text-sm w-28 focus:outline-none focus:ring-2 focus:ring-primary/30"
-            >
-              {regions
-                .filter((r) => r !== "전체")
-                .map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-            </select>
+              onChange={onRegionChange}
+              icon="location_on"
+              size="sm"
+              className="w-28"
+              ariaLabel="광역지역 선택"
+            />
             {currentSubRegions.length > 0 && (
-              <select
+              <Dropdown
+                options={currentSubRegions.map((sr) => ({ value: sr, label: sr }))}
                 value={selectedSubRegion}
-                onChange={(e) => onSubRegionChange(e.target.value)}
-                className="bg-gray-100 rounded-full px-3 py-1.5 text-sm w-32 focus:outline-none focus:ring-2 focus:ring-primary/30"
-              >
-                {currentSubRegions.map((sr) => (
-                  <option key={sr} value={sr}>
-                    {sr}
-                  </option>
-                ))}
-              </select>
+                onChange={onSubRegionChange}
+                searchable
+                size="sm"
+                className="w-32"
+                ariaLabel="기초지역 선택"
+              />
             )}
           </div>
           <button
@@ -112,31 +109,26 @@ export function Header({
       {showMobileFilter && (
         <div className="lg:hidden bg-white border-t border-gray-100 px-4 py-3 shadow-sm">
           <div className="flex gap-2">
-            <select
+            <Dropdown
+              options={REGION_OPTIONS}
               value={selectedRegion}
-              onChange={(e) => onRegionChange(e.target.value)}
-              className="flex-1 bg-gray-100 rounded-full px-3 py-2 text-sm"
-            >
-              {regions
-                .filter((r) => r !== "전체")
-                .map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-            </select>
+              onChange={onRegionChange}
+              icon="location_on"
+              searchable
+              size="md"
+              className="flex-1"
+              ariaLabel="광역지역 선택"
+            />
             {currentSubRegions.length > 0 && (
-              <select
+              <Dropdown
+                options={currentSubRegions.map((sr) => ({ value: sr, label: sr }))}
                 value={selectedSubRegion}
-                onChange={(e) => onSubRegionChange(e.target.value)}
-                className="flex-1 bg-gray-100 rounded-full px-3 py-2 text-sm"
-              >
-                {currentSubRegions.map((sr) => (
-                  <option key={sr} value={sr}>
-                    {sr}
-                  </option>
-                ))}
-              </select>
+                onChange={onSubRegionChange}
+                searchable
+                size="md"
+                className="flex-1"
+                ariaLabel="기초지역 선택"
+              />
             )}
           </div>
         </div>

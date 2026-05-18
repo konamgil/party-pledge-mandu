@@ -11,7 +11,8 @@ function timeAgoServer(dateStr: string): string {
   return `${Math.floor(days / 30)}개월 전`;
 }
 
-const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";
+import { env } from "@/shared/contracts/env";
+const SITE_URL = env("MANDU_SITE_URL", "https://party-pledge.example.com");
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const p = await getPledgeById(params.id);

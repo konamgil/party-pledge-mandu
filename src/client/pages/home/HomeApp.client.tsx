@@ -21,13 +21,30 @@ import { Feed } from "@/client/widgets/feed/Feed";
 import { RightSidebar } from "@/client/widgets/right-sidebar/RightSidebar";
 import { MobileNav } from "@/client/widgets/mobile-nav/MobileNav";
 
-interface HomeAppProps {
-  initialParties: Party[];
-  initialCandidates: Candidate[];
-  initialPledges: Pledge[];
-}
+function HomeApp() {
+  const [initialParties, setInitialParties] = useState<Party[]>([]);
+  const [initialCandidates, setInitialCandidates] = useState<Candidate[]>([]);
+  const [initialPledges, setInitialPledges] = useState<Pledge[]>([]);
 
-function HomeApp({ initialParties, initialCandidates, initialPledges }: HomeAppProps) {
+  useEffect(() => {
+    let aborted = false;
+    Promise.all([
+      fetch("/api/parties?limit=100").then((r) => r.json()),
+      fetch("/api/candidates?limit=100").then((r) => r.json()),
+      fetch("/api/pledges?limit=100").then((r) => r.json()),
+    ])
+      .then(([p, c, pl]) => {
+        if (aborted) return;
+        setInitialParties(Array.isArray(p?.data) ? p.data : []);
+        setInitialCandidates(Array.isArray(c?.data) ? c.data : []);
+        setInitialPledges(Array.isArray(pl?.data) ? pl.data : []);
+      })
+      .catch(() => {});
+    return () => {
+      aborted = true;
+    };
+  }, []);
+
   const partyByUuid = useMemo(() => {
     const m: Record<string, Party> = {};
     for (const p of initialParties) m[p.id] = p;

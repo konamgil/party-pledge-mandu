@@ -1,6 +1,7 @@
 import { db } from "@/server/infra/db";
 
-const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";
+import { env } from "@/shared/contracts/env";
+const SITE_URL = env("MANDU_SITE_URL", "https://party-pledge.example.com");
 
 interface PartyRow { code: string }
 interface CandidateRow { id: string }

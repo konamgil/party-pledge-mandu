@@ -1,7 +1,7 @@
-import HomeApp from "@/client/pages/home/HomeApp";
-import { listCandidates, listParties, listPledges } from "@/shared/contracts/api";
+import HomeApp from "@/client/pages/home/HomeApp.client";
+import { env } from "@/shared/contracts/env";
 
-const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";
+const SITE_URL = env("MANDU_SITE_URL", "https://party-pledge.example.com");
 
 export const metadata = {
   title: "공약포럼 — 2026 지방선거 후보 공약 한눈에 비교",
@@ -9,13 +9,7 @@ export const metadata = {
     "2026 지방선거 4개 정당(민주·국힘·조국혁신·개혁신당) 후보의 공약을 정당·지역·직위별로 비교하고 시민이 직접 평가하는 SNS",
 };
 
-export default async function HomePage() {
-  const [initialParties, initialCandidates, initialPledges] = await Promise.all([
-    listParties(),
-    listCandidates(),
-    listPledges(),
-  ]);
-
+export default function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -34,11 +28,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <title>공약포럼 — 2026 지방선거 후보 공약 한눈에 비교</title>
-      <meta
-        name="description"
-        content="2026 지방선거 4개 정당(민주·국힘·조국혁신·개혁신당) 후보의 공약을 정당·지역·직위별로 비교하고 시민이 직접 평가합니다."
-      />
       <meta property="og:type" content="website" />
       <meta property="og:title" content="공약포럼 — 2026 지방선거 공약" />
       <meta
@@ -51,11 +40,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <HomeApp
-        initialParties={initialParties}
-        initialCandidates={initialCandidates}
-        initialPledges={initialPledges}
-      />
+      <HomeApp />
     </>
   );
 }

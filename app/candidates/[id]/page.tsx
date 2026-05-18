@@ -1,6 +1,7 @@
 import { getCandidateBundle } from "@/shared/contracts/api";
 
-const SITE_URL = process.env.MANDU_SITE_URL ?? "https://party-pledge.example.com";
+import { env } from "@/shared/contracts/env";
+const SITE_URL = env("MANDU_SITE_URL", "https://party-pledge.example.com");
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const bundle = await getCandidateBundle(params.id);
