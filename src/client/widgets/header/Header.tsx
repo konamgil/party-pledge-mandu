@@ -1,5 +1,6 @@
 "use client";
 
+import { Bell, MapPin, Search } from "lucide-react";
 import { AuthButton } from "@/client/features/auth-button/AuthButton";
 import { Dropdown } from "@/client/shared/ui/dropdown";
 import { regions } from "@/client/shared/lib/data";
@@ -52,9 +53,7 @@ export function Header({
               }
             }}
           >
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
-              search
-            </span>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
               className="w-full bg-gray-100 rounded-full py-2 pl-9 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:bg-white border border-transparent focus:border-primary/20 text-sm transition-all"
               placeholder="공약, 후보자, 정당 검색... (Enter)"
@@ -69,7 +68,7 @@ export function Header({
             onClick={onToggleMobileFilter}
             className="lg:hidden flex items-center gap-1 text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1.5 rounded-full hover:bg-gray-200 transition-colors"
           >
-            <span className="material-symbols-outlined text-base">location_on</span>
+            <MapPin className="w-4 h-4" />
             {selectedRegion}
           </button>
           <div className="hidden lg:flex items-center gap-1.5">
@@ -77,7 +76,7 @@ export function Header({
               options={REGION_OPTIONS}
               value={selectedRegion}
               onChange={onRegionChange}
-              icon="location_on"
+              icon={<MapPin className="w-4 h-4" />}
               size="sm"
               className="w-28"
               ariaLabel="광역지역 선택"
@@ -100,7 +99,7 @@ export function Header({
             className="relative text-gray-500 hover:text-primary transition-colors p-2 rounded-full hover:bg-gray-100"
             aria-label="알림"
           >
-            <span className="material-symbols-outlined text-xl">notifications</span>
+            <Bell className="w-5 h-5" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
           </button>
           <AuthButton />
@@ -113,7 +112,7 @@ export function Header({
               options={REGION_OPTIONS}
               value={selectedRegion}
               onChange={onRegionChange}
-              icon="location_on"
+              icon={<MapPin className="w-4 h-4" />}
               searchable
               size="md"
               className="flex-1"

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Check, ChevronDown } from "lucide-react";
 
 export interface DropdownOption {
   value: string;
@@ -11,7 +12,7 @@ interface DropdownProps {
   options: DropdownOption[];
   value: string;
   onChange: (value: string) => void;
-  icon?: string;
+  icon?: ReactNode;
   placeholder?: string;
   searchable?: boolean;
   size?: "sm" | "md";
@@ -35,7 +36,6 @@ export function Dropdown({
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // 외부 클릭 / ESC 닫기
   useEffect(() => {
     if (!open) return;
     function onDocClick(e: MouseEvent) {
@@ -49,7 +49,6 @@ export function Dropdown({
     document.addEventListener("mousedown", onDocClick);
     document.addEventListener("keydown", onKey);
     if (searchable) {
-      // open 시 search input 자동 포커스
       setTimeout(() => inputRef.current?.focus(), 0);
     }
     return () => {
@@ -78,21 +77,15 @@ export function Dropdown({
         aria-label={ariaLabel ?? selected?.label ?? placeholder}
         className={`${sizeClasses} bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 flex items-center gap-1.5 w-full text-left transition-colors`}
       >
-        {icon && (
-          <span className="material-symbols-outlined text-base text-gray-500 shrink-0">
-            {icon}
-          </span>
-        )}
+        {icon && <span className="text-gray-500 shrink-0 flex items-center">{icon}</span>}
         <span className="flex-grow truncate text-gray-700">
           {selected?.label ?? placeholder}
         </span>
-        <span
-          className={`material-symbols-outlined text-base text-gray-400 shrink-0 transition-transform ${
+        <ChevronDown
+          className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${
             open ? "rotate-180" : ""
           }`}
-        >
-          expand_more
-        </span>
+        />
       </button>
 
       {open && (
@@ -114,18 +107,12 @@ export function Dropdown({
           )}
           <ul className="overflow-y-auto max-h-60">
             {filtered.length === 0 ? (
-              <li className="px-3 py-2 text-sm text-gray-400 text-center">
-                결과 없음
-              </li>
+              <li className="px-3 py-2 text-sm text-gray-400 text-center">결과 없음</li>
             ) : (
               filtered.map((opt) => {
                 const active = opt.value === value;
                 return (
-                  <li
-                    key={opt.value}
-                    role="option"
-                    aria-selected={active}
-                  >
+                  <li key={opt.value} role="option" aria-selected={active}>
                     <button
                       type="button"
                       onClick={() => {
@@ -139,12 +126,12 @@ export function Dropdown({
                           : "text-gray-700 hover:bg-gray-50"
                       }`}
                     >
-                      {active && (
-                        <span className="material-symbols-outlined text-base text-primary">
-                          check
-                        </span>
+                      {active ? (
+                        <Check className="w-4 h-4 text-primary shrink-0" />
+                      ) : (
+                        <span className="w-4 h-4 shrink-0" />
                       )}
-                      <span className={active ? "" : "ml-6"}>{opt.label}</span>
+                      <span>{opt.label}</span>
                     </button>
                   </li>
                 );

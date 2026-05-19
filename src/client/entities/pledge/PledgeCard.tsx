@@ -1,3 +1,4 @@
+import { Bookmark, MessageCircle, MoreHorizontal, Share2, ThumbsDown, ThumbsUp } from "lucide-react";
 import type { Pledge, Party } from "@/client/shared/lib/types";
 import { timeAgo } from "@/client/shared/lib/utils";
 
@@ -60,7 +61,7 @@ export function PledgeCard({
           className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity"
           aria-label="더보기"
         >
-          <span className="material-symbols-outlined text-lg">more_horiz</span>
+          <MoreHorizontal className="w-4 h-4" />
         </button>
       </div>
 
@@ -95,9 +96,7 @@ export function PledgeCard({
             }`}
             aria-label="upvote"
           >
-            <span className={`material-symbols-outlined text-lg ${voteState === 1 ? "fill" : ""}`}>
-              thumb_up
-            </span>
+            <ThumbsUp className="w-4 h-4" fill={voteState === 1 ? "currentColor" : "none"} />
             <span className="font-medium text-xs">
               {pledge.upvotes + (voteState === 1 ? 1 : 0)}
             </span>
@@ -112,9 +111,7 @@ export function PledgeCard({
             }`}
             aria-label="downvote"
           >
-            <span className={`material-symbols-outlined text-lg ${voteState === -1 ? "fill" : ""}`}>
-              thumb_down
-            </span>
+            <ThumbsDown className="w-4 h-4" fill={voteState === -1 ? "currentColor" : "none"} />
           </button>
           <span className="text-xs font-bold text-gray-700 ml-1">{netVotes}</span>
         </div>
@@ -127,7 +124,7 @@ export function PledgeCard({
             className="flex items-center gap-1 px-2.5 py-1 rounded-full text-gray-500 hover:bg-gray-100 transition-colors text-sm"
             aria-label="댓글"
           >
-            <span className="material-symbols-outlined text-lg">chat_bubble_outline</span>
+            <MessageCircle className="w-4 h-4" />
             <span className="text-xs font-medium">{pledge.commentCount}</span>
           </button>
           <button
@@ -138,7 +135,7 @@ export function PledgeCard({
             className="flex items-center gap-1 px-2.5 py-1 rounded-full text-gray-500 hover:bg-gray-100 transition-colors text-sm"
             aria-label="공유"
           >
-            <span className="material-symbols-outlined text-lg">share</span>
+            <Share2 className="w-4 h-4" />
           </button>
           <button
             onClick={(e) => {
@@ -148,7 +145,7 @@ export function PledgeCard({
             className="flex items-center gap-1 px-2.5 py-1 rounded-full text-gray-500 hover:bg-gray-100 transition-colors text-sm"
             aria-label="저장"
           >
-            <span className="material-symbols-outlined text-lg">bookmark_border</span>
+            <Bookmark className="w-4 h-4" />
           </button>
         </div>
       </div>

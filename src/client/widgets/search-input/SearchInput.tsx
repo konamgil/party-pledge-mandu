@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Search } from "lucide-react";
 
 interface SearchInputProps {
   defaultValue?: string;
@@ -21,9 +22,7 @@ export function SearchInput({ defaultValue = "" }: SearchInputProps) {
 
   return (
     <form onSubmit={handleSubmit} className="relative">
-      <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">
-        search
-      </span>
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
       <input
         type="search"
         value={q}

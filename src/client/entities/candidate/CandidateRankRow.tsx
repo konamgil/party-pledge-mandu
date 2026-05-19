@@ -1,3 +1,4 @@
+import { Heart, User } from "lucide-react";
 import type { Candidate, Party } from "@/client/shared/lib/types";
 
 interface CandidateRankRowProps {
@@ -34,7 +35,7 @@ export function CandidateRankRow({
         {rank}
       </span>
       <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-        <span className="material-symbols-outlined text-gray-400 text-base">person</span>
+        <User className="w-4 h-4 text-gray-400" />
       </div>
       <div className="flex-grow min-w-0">
         <div className="flex items-center gap-1">
@@ -59,9 +60,7 @@ export function CandidateRankRow({
         }`}
         aria-label={liked ? "좋아요 취소" : "좋아요"}
       >
-        <span className={`material-symbols-outlined text-base ${liked ? "fill" : ""}`}>
-          favorite
-        </span>
+        <Heart className="w-4 h-4" fill={liked ? "currentColor" : "none"} />
       </button>
     </div>
   );

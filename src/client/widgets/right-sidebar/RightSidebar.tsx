@@ -1,5 +1,6 @@
 "use client";
 
+import { MessageCircle, ThumbsUp, TrendingUp } from "lucide-react";
 import { CandidateRankRow } from "@/client/entities/candidate/CandidateRankRow";
 import { getRegionFullName } from "@/client/shared/lib/data";
 import type { Candidate, Party, Pledge } from "@/client/shared/lib/types";
@@ -59,9 +60,7 @@ export function RightSidebar({
       {/* Trending pledges */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
         <h3 className="font-bold text-sm text-gray-800 mb-3 flex items-center gap-1.5">
-          <span className="material-symbols-outlined text-orange-500 text-base">
-            trending_up
-          </span>
+          <TrendingUp className="w-4 h-4 text-orange-500" />
           실시간 인기 공약
         </h3>
         <div className="flex flex-col gap-3">
@@ -95,13 +94,11 @@ export function RightSidebar({
                         {party?.shortName ?? "?"}
                       </span>
                       <span className="text-[11px] text-gray-400 flex items-center gap-0.5">
-                        <span className="material-symbols-outlined text-[11px]">thumb_up</span>
+                        <ThumbsUp className="w-3 h-3" />
                         {p.upvotes}
                       </span>
                       <span className="text-[11px] text-gray-400 flex items-center gap-0.5">
-                        <span className="material-symbols-outlined text-[11px]">
-                          chat_bubble_outline
-                        </span>
+                        <MessageCircle className="w-3 h-3" />
                         {p.commentCount}
                       </span>
                     </div>

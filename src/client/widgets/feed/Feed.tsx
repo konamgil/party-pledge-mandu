@@ -1,5 +1,14 @@
 "use client";
 
+import {
+  ChevronRight,
+  Clock,
+  Flame,
+  Navigation,
+  SearchX,
+  TrendingUp,
+  type LucideIcon,
+} from "lucide-react";
 import { PledgeCard } from "@/client/entities/pledge/PledgeCard";
 import { getRegionFullName } from "@/client/shared/lib/data";
 import type { Party, Pledge, PositionTab, SortType } from "@/client/shared/lib/types";
@@ -27,10 +36,10 @@ interface FeedProps {
   onVote: (pledgeId: string, direction: 1 | -1) => void;
 }
 
-const SORT_OPTIONS: { key: SortType; label: string; icon: string }[] = [
-  { key: "hot", label: "인기", icon: "local_fire_department" },
-  { key: "new", label: "최신", icon: "schedule" },
-  { key: "top", label: "추천순", icon: "trending_up" },
+const SORT_OPTIONS: { key: SortType; label: string; Icon: LucideIcon }[] = [
+  { key: "hot", label: "인기", Icon: Flame },
+  { key: "new", label: "최신", Icon: Clock },
+  { key: "top", label: "추천순", Icon: TrendingUp },
 ];
 
 export function Feed({
@@ -75,15 +84,13 @@ export function Feed({
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-primary/5 to-transparent border-b border-gray-100">
           <div className="flex items-center gap-2 text-sm">
-            <span className="material-symbols-outlined text-primary text-base">near_me</span>
+            <Navigation className="w-4 h-4 text-primary" />
             <span className="font-semibold text-gray-800">
               {getRegionFullName(selectedRegion)}
             </span>
             {selectedSubRegion && (
               <>
-                <span className="material-symbols-outlined text-gray-400 text-sm">
-                  chevron_right
-                </span>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
                 <span className="font-medium text-gray-600">{selectedSubRegion}</span>
               </>
             )}
@@ -119,7 +126,7 @@ export function Feed({
                 : "text-gray-500 hover:bg-gray-100"
             }`}
           >
-            <span className="material-symbols-outlined text-[16px]">{s.icon}</span>
+            <s.Icon className="w-4 h-4" />
             {s.label}
           </button>
         ))}
@@ -128,9 +135,7 @@ export function Feed({
       {/* Pledge feed */}
       {filteredPledges.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center shadow-sm">
-          <span className="material-symbols-outlined text-5xl text-gray-300 mb-3 block">
-            search_off
-          </span>
+          <SearchX className="w-12 h-12 text-gray-300 mx-auto mb-3" />
           <p className="text-gray-500 font-medium">해당 조건에 맞는 공약이 없습니다.</p>
           <p className="text-sm text-gray-400 mt-1">다른 직위 탭이나 필터를 선택해보세요.</p>
         </div>
