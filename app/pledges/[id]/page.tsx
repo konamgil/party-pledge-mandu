@@ -1,15 +1,6 @@
-import { CommentForm } from "@/client/widgets/comment-form/CommentForm";
+import { CommentsSection, type CommentItem } from "@/client/widgets/comments-section/CommentsSection.client";
+import { PledgeActions } from "@/client/widgets/pledge-actions/PledgeActions.client";
 import { getPledgeById, listCommentsByPledgeId } from "@/shared/contracts/api";
-
-function timeAgoServer(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  if (days <= 0) return "오늘";
-  if (days === 1) return "어제";
-  if (days < 7) return `${days}일 전`;
-  if (days < 30) return `${Math.floor(days / 7)}주 전`;
-  return `${Math.floor(days / 30)}개월 전`;
-}
 
 import { env } from "@/shared/contracts/env";
 const SITE_URL = env("MANDU_SITE_URL", "https://party-pledge.example.com");
@@ -95,32 +86,10 @@ export default async function PledgePage({ params }: { params: { id: string } })
           <span>👎 {pledge.downvotes}</span>
           <span>💬 {comments.length}</span>
         </footer>
+        <PledgeActions pledgeId={pledge.id} authorName={pledge.author} />
       </article>
 
-      <section className="mt-8">
-        <h2 className="text-lg font-bold text-gray-800 mb-3">댓글 {comments.length}</h2>
-        <CommentForm pledgeId={pledge.id} />
-        <div className="flex flex-col gap-3 mt-4">
-          {comments.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-6">
-              아직 댓글이 없습니다. 첫 댓글을 남겨주세요.
-            </p>
-          ) : (
-            comments.map((c) => (
-              <article
-                key={c.id}
-                className="bg-white rounded-xl border border-gray-200 shadow-sm p-4"
-              >
-                <header className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">{c.userName}</span>
-                  <span className="text-xs text-gray-400">{timeAgoServer(c.createdAt)}</span>
-                </header>
-                <p className="text-sm text-gray-700 whitespace-pre-line">{c.body}</p>
-              </article>
-            ))
-          )}
-        </div>
-      </section>
+      <CommentsSection pledgeId={pledge.id} initialComments={comments as CommentItem[]} />
     </main>
   );
 }

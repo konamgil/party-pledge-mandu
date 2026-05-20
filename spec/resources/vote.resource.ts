@@ -11,6 +11,7 @@ export default defineResource({
     userId: { type: "uuid", required: true },
     pledgeId: { type: "uuid", required: true },
     direction: { type: "number", required: true },
+    createdAt: { type: "date", required: false },
   },
   options: {
     description: "Vote management API",

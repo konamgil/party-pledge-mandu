@@ -10,6 +10,7 @@ export default defineResource({
     id: { type: "uuid", required: true },
     pledgeId: { type: "uuid", required: true },
     userId: { type: "uuid", required: true },
+    parentId: { type: "uuid", required: false },
     body: { type: "string", required: true },
     createdAt: { type: "date", required: true },
   },

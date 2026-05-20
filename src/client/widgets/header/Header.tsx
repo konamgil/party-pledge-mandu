@@ -1,7 +1,8 @@
 "use client";
 
-import { Bell, MapPin, Search } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 import { AuthButton } from "@/client/features/auth-button/AuthButton";
+import { NotificationBell } from "@/client/features/notification-bell/NotificationBell";
 import { Dropdown } from "@/client/shared/ui/dropdown";
 import { regions } from "@/client/shared/lib/data";
 
@@ -93,15 +94,7 @@ export function Header({
               />
             )}
           </div>
-          <button
-            type="button"
-            onClick={() => alert("알림 기능은 준비 중입니다.")}
-            className="relative text-gray-500 hover:text-primary transition-colors p-2 rounded-full hover:bg-gray-100"
-            aria-label="알림"
-          >
-            <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
+          <NotificationBell />
           <AuthButton />
         </div>
       </div>

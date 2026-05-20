@@ -71,6 +71,9 @@ export async function getPartyBundle(
 
 export interface CommentWithUser {
   id: string;
+  pledgeId: string;
+  userId: string;
+  parentId: string | null;
   body: string;
   createdAt: string;
   userName: string;
