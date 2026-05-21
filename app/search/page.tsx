@@ -1,5 +1,5 @@
 import { listCandidates, listParties, listPledges } from "@/shared/contracts/api";
-import { SearchInput } from "@/client/widgets/search-input/SearchInput";
+import { SearchInput } from "@/client/widgets/search-input/SearchInput.client";
 
 export async function generateMetadata({
   searchParams,

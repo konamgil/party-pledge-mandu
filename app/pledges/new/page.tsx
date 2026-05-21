@@ -1,5 +1,5 @@
 import { listCandidates, listParties } from "@/shared/contracts/api";
-import { PledgeForm } from "@/client/widgets/pledge-form/PledgeForm";
+import { PledgeForm } from "@/client/widgets/pledge-form/PledgeForm.client";
 
 export const metadata = {
   title: "공약 제안하기 | 공약포럼",
